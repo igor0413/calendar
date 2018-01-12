@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom'
+import './stylesheets/ui.scss'
+import './stylesheets/index.scss'
 import {App} from './components/App'
 import {Router, Route, hashHistory} from 'react-router'
 import {Whoops404} from './components/Whoops404'
