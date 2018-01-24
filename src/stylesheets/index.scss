@@ -9,14 +9,17 @@ div.app {
   margin: 0;
 }
 
+body {
+  font-size: 55%;
+}
+
 h1, label {
   margin: 0
 }
 
 div.app {
- background-image:url('../assets/rowdy.jpg');
- background-size: cover;
- background-position: center;
+  background-size: cover;
+  background: url('../assets/rowdy.jpg') center;
 }
 
 div.whoops-404 {

@@ -1,22 +1,36 @@
-import React, {Component} from 'react';
+import C from './constants'
+import React from 'react'
 import {render} from 'react-dom'
-import './stylesheets/ui.scss'
-import './stylesheets/index.scss'
-import {App} from './components/App'
-import {Router, Route, hashHistory} from 'react-router'
-import {Whoops404} from './components/Whoops404'
+import routes from './routes'
+import sampleData from './initialState'
+import storeFactory from './store'
+import { Provider } from 'react-redux'
+import { addError } from './actions'
+
+const initialState = (localStorage["redux-store"]) ?
+  JSON.parse(localStorage["redux-store"]) :
+  sampleData
+
+const saveState = () =>
+  localStorage["redux-store"] = JSON.stringify(store.getState())
+
+const store = storeFactory(initialState)
+store.subscribe(saveState)
+
+const handleError = error => {
+  store.dispatch(
+    addError(error.message)
+  )
+}
 
 window.React = React
+window.store = store
 
-render (
-  <Router history={hashHistory}>
-    <Route path="/" component={App}/>
-    <Route path="list-days" component={App}>
-      <Route path=":filter"></Route>
-    </Route>
-    <Route path="add-day" component={App}/>
-    <Route path="*" component={Whoops404}/>
-  </Router>,
+window.addEventListener("error", handleError)
+
+render(
+  <Provider store={store}>{routes}
+  </Provider>,
   document.getElementById('react-container')
 )
 
